@@ -1,0 +1,150 @@
+<html>
+<head>
+<base target="_blank">
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../jflix-favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juan Flix+ | Elige tu plan</title>
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <img src="https://juan-flix.github.io/assets/jflix/img/jflix-logo.png" alt="JFlix Logo" class="logo">
+        </nav>
+
+        <div class="header">
+            <h1>Elige el plan adecuado para ti</h1>
+            <p>Mira Juan Flix+ en todos tus dispositivos.</p>
+        </div>
+
+        <div class="plans-container">
+            <div class="plan-card">
+                <div class="plan-name">Básico</div>
+                <div class="plan-price">$2.500/mes</div>
+                <ul class="plan-features">
+                    <li>Calidad HD</li>
+                    <li>1 dispositivo a la vez</li>
+                    <li>Sin anuncios</li>
+                </ul>
+                <a href="https://wa.me/573104573859?text=Quiero%20la%20suscripción%20de%20Juan%20Flix+%20:%20Básico" class="subscribe-btn">Suscribirse</a>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-name">Estándar</div>
+                <div class="plan-price">$3.000/mes</div>
+                <ul class="plan-features">
+                    <li>Calidad Full HD</li>
+                    <li>2 dispositivos a la vez</li>
+                    <li>Sin anuncios</li>
+                    <li>Compartir cuenta</li>
+                </ul>
+                <a href="https://wa.me/573104573859?text=Quiero%20la%20suscripción%20de%20Juan%20Flix+%20:%20Estándar" class="subscribe-btn">Suscribirse</a>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-name">Premium</div>
+                <div class="plan-price">$3.500/mes</div>
+                <ul class="plan-features">
+                    <li>Calidad Ultra HD 4K</li>
+                    <li>4 dispositivos a la vez</li>
+                    <li>Sin anuncios</li>
+                    <li>Compartir cuenta</li>
+                    <li>Audio espacial</li>
+                </ul>
+                <a href="https://wa.me/573104573859?text=Quiero%20la%20suscripción%20de%20Juan%20Flix+%20:%20Premium" class="subscribe-btn">Suscribirse</a>
+            </div>
+        </div>
+    </div>
+    <div class="UserContainer">
+            <nav>
+                <img src="https://juan-flix.github.io/assets/jflix/img/jflix-logo.png" alt="JFlix Logo" class="logo">
+            </nav>
+            <div class="header">
+        <h1>Ya estás registrado en Juan Flix+!</h1>
+        <p>Deseas comprar otro plan?</p>
+        <button class="btn" onclick="userShop()">Comprar otro plan</button>
+        <p>... o vas a iniciar sesión en tu cuenta actual</p>
+        <button class="btn" onclick="userLogin()">Iniciar sesión</button></div>
+    </div>
+</body>
+<script>
+    const mainContainer = document.querySelector('.container');
+    const UserContainer = document.querySelector('.UserContainer');
+    mainContainer.style.display = 'block';
+    UserContainer.style.display = 'none';
+            
+        
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+  
+
+    window.onload = function() {
+        const sesion = getCookie('sesion');
+        const nombre = getCookie('nombre');
+        const edad = getCookie('edad');
+
+  
+  
+        if (!sesion || !nombre || !edad) {
+           
+            console.log('El usuario no está registrado, loading normal page...');
+           
+  
+        } else {
+            verificarPin();
+        }
+    };
+  
+  
+
+
+    async function verificarPin() {
+    const sesion = getCookie('sesion');
+    
+    // Decode the session cookie instead of encoding it
+    const sesionDecoded = atob(sesion); // Change this line
+
+    try {
+        const response = await fetch('https://cdn-jdev.github.io/jflix/pins/');
+        const data = await response.json();
+        
+        if (data.pins.includes(sesionDecoded)) {
+            console.log('sesion verify passed');
+            protocoloUser();
+        } else {
+            console.log('no sesion');
+            }
+    } catch (error) {
+        console.error('Error al verificar PIN:', error);
+        console.log('pin verify error');
+        console.log('Si ves esto, llama al soporte técnico y diles que el ID del error es: 3verify-error-sync');
+    }
+}
+
+
+        function protocoloUser(){
+            mainContainer.style.display = 'none';
+            UserContainer.style.display = 'block';
+
+        }
+
+
+    function userShop(){
+        UserContainer.style.display = 'none';
+        mainContainer.style.display = 'block';
+    }
+
+    function userLogin(){
+        window.location.href = '../login/';
+    }
+  
+
+
+
+
+    </script>
+</html>
